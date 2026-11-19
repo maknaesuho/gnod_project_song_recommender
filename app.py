@@ -9,7 +9,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import streamlit as st
-from IPython.display import IFrame
 from sklearn.cluster import KMeans
 from sklearn.metrics import pairwise_distances, silhouette_score
 from sklearn.preprocessing import StandardScaler
@@ -63,9 +62,19 @@ class SoundModel:
     cluster_sizes: dict[int, int]
 
 
+class IFrame:
+    """Small stand-in for the notebook player, with no IPython dependency."""
+
+    def __init__(self, src: str, width: str, height: str, **kwargs: str) -> None:
+        self.src = src
+        self.width = width
+        self.height = height
+        self.params = kwargs
+
+
 def play_song(track_id: str) -> IFrame:
     return IFrame(
-        src=f"https://open.spotify.com/embed/track/{track_id}",
+        src="https://open.spotify.com/embed/track/" + track_id,
         width="320",
         height="80",
         frameborder="0",
